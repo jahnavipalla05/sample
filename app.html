@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAMES Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FLAMES Game</h1>
+        <input type="text" id="name1" placeholder="Enter first name" />
+        <input type="text" id="name2" placeholder="Enter second name" />
+        <button id="calculateButton">Calculate</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('calculateButton').addEventListener('click', function() {
+            const name1 = document.getElementById('name1').value.trim().toLowerCase();
+            const name2 = document.getElementById('name2').value.trim().toLowerCase();
+
+            if (name1 && name2) {
+                const result = flamesGame(name1, name2);
+                document.getElementById('result').textContent = `Result: ${result}`;
+            } else {
+                document.getElementById('result').textContent = 'Please enter both names.';
+            }
+        });
+
+        function flamesGame(name1, name2) {
+            const combinedName = (name1 + name2).replace(/\s+/g, '');
+            const uniqueCount = countUniqueLetters(combinedName);
+            const flames = ['F', 'L', 'A', 'M', 'E', 'S'];
+            let index = (uniqueCount - 1) % flames.length;
+            return flames[index];
+        }
+
+        function countUniqueLetters(name) {
+            const letterCount = {};
+            for (const char of name) {
+                letterCount[char] = (letterCount[char] || 0) + 1;
+            }
+            return Object.keys(letterCount).length;
+        }
+    </script>
+</body>
+</html>
